@@ -1,11 +1,12 @@
-@import "@fontsource/outfit";
-
 :root {
   /* Color Palette - Premium Health-Tech */
-  --primary: #0EA5E9; /* Sky Blue */
+  --primary: #0EA5E9;
+  /* Sky Blue */
   --primary-dark: #0369A1;
-  --secondary: #10B981; /* Emerald Green */
-  --accent: #6366F1; /* Indigo */
+  --secondary: #10B981;
+  /* Emerald Green */
+  --accent: #6366F1;
+  /* Indigo */
   --background: #F8FAFC;
   --surface: #FFFFFF;
   --text-main: #0F172A;
@@ -13,12 +14,12 @@
   --border: #E2E8F0;
   --error: #EF4444;
   --success: #10B981;
-  
+
   /* Glassmorphism */
   --glass-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(255, 255, 255, 0.3);
   --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
-  
+
   /* Typography */
   --font-main: 'Outfit', sans-serif;
 }
@@ -37,7 +38,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 700;
   color: var(--text-main);
 }
@@ -86,8 +92,15 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {
