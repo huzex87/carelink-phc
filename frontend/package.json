@@ -9,7 +9,7 @@
     "@fontsource/outfit": "^5.2.8",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "framer-motion": "^12.34.3",
+    "framer-motion": "^6.5.1",
     "lucide-react": "^0.575.0",
     "pouchdb": "^9.0.0",
     "pouchdb-find": "^9.0.0",
