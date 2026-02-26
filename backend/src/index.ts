@@ -45,8 +45,10 @@ app.use('/api/v1/encounters', encountersRouter);
 // Layer 2/3 - Analytics Routes
 app.use('/api/v1/analytics', analyticsRouter);
 
-app.listen(PORT, () => {
-  console.log(`🚀 CareLink PHC Server running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`🚀 CareLink PHC Server running on port ${PORT}`);
+  });
+}
 
 export default app;
