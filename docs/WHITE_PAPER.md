@@ -124,6 +124,21 @@ A "Security-by-Design" approach ensures the protection of sensitive patient PII.
 
 ---
 
+#### 4.6 Cloud Deployment (Vercel)
+CareLink PHC is optimized for high-performance cloud execution:
+- **Serverless API**: Adapted Express backend to run as Vercel Serverless Functions.
+- **Edge Routing**: Global distribution of the clinical PWA for sub-millisecond local performance.
+- **Auto-Scaling**: Automatic scaling during epidemiological spikes or surges in facility data volume.
+
+---
+
+### 5. Security, Governance & Compliance
+...
+[Existing content]
+...
+
+---
+
 ### 6. Implementation Roadmap
 
 | Phase | Milestone | Deliverables | Status |
@@ -136,13 +151,14 @@ A "Security-by-Design" approach ensures the protection of sensitive patient PII.
 | **Phase 6** | Infrastructure| Docker, Nginx Hardening, Env Security | ✅ COMPLETED |
 | **Phase 7** | Logistics| LMIS Integration, Longitudinal Timeline | ✅ COMPLETED |
 | **Phase 8** | Spatial | CHV Mobile Hub, GIS Heatmapping | ✅ COMPLETED |
+| **Phase 9** | Reliability | CI Stabilization, Secret Scrubbing | ✅ COMPLETED |
+| **Phase 10** | Cloud Scale | Vercel Deployment, Serverless Adapters | ✅ COMPLETED |
 
 ---
 
-### 7. Future Horizons (Phase 4 & Beyond)
-- **ML-Driven Outbreak Detection**: Early warning systems that detect morbidity spikes before they reach crisis proportions.
-- **Resource Management (LMIS)**: Integration with drug procurement data to match clinical needs with medical supply chain availability.
-- **Telemedicine Integration**: Enabling remote specialist consultation for Primary Care providers via the CareLink platform.
+### 7. Future Horizons (Phase 11 & Beyond)
+- **AI-Driven Forecasting**: Using deep learning to predict vaccine stock-outs and outbreaks.
+- **Telemedicine Integration**: Scaling specialist consults via the unified care portal.
 
 ---
 **Standard**: ISO/TC 215 Medical Informatics | HL7 FHIR Allied
