@@ -86,8 +86,13 @@ The **Indicator Engine** is the brain of the system. It uses a non-destructive p
 
 #### 4.3 DHIS2 Interoperability (Layer 4)
 Interoperability is achieved via the `DHIS2 Bridge`:
-- **ADX Transformer**: Converts JSON indicators into standard `XML-ADX` format.
 - **Sync Manager**: A persistent queue that handles retries and back-off strategies, ensuring data reaches the National Instance even on poor 3G networks.
+
+#### 4.4 Integrated Logistics (LMIS)
+The system bridges clinical activity with supply chain management:
+- **AMC Forecasting**: Automatically calculates **Average Monthly Consumption** from dispensed prescriptions.
+- **Atomic Synchronization**: Stock levels are decremented in real-time within the clinical data lake during pharmacy fulfillment.
+- **Stock-Out Prevention**: Integrated alerts for "Months of Stock" (MOS) falling below critical safety thresholds.
 
 ---
 
@@ -119,6 +124,7 @@ A "Security-by-Design" approach ensures the protection of sensitive patient PII.
 | **Phase 4** | Scale | CI/CD, Lab/Pharmacy Modules, Training SOP | ✅ COMPLETED |
 | **Phase 5** | Intelligence| Epidemic Alerting, Referrals, OIDC SSO | ✅ COMPLETED |
 | **Phase 6** | Infrastructure| Docker, Nginx Hardening, Env Security | ✅ COMPLETED |
+| **Phase 7** | Logistics| LMIS Integration, Longitudinal Timeline | ✅ COMPLETED |
 
 ---
 

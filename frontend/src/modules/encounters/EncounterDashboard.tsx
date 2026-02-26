@@ -4,6 +4,7 @@ import ANCForm from './ANCForm';
 import IMMForm from './IMMForm';
 import NCDForm from './NCDForm';
 import ReferralModule from '../patients/ReferralModule';
+import ClinicalTimeline from '../../components/ClinicalTimeline';
 import { User, ChevronLeft, Stethoscope, Baby, HeartPulse, ShieldCheck, Share2 } from 'lucide-react';
 
 interface Patient {
@@ -47,6 +48,16 @@ const EncounterDashboard: React.FC<EncounterDashboardProps> = ({ patient, onBack
                             <span className="font-mono font-bold text-primary">{patient.unique_id}</span>
                             <span>{patient.sex === 'M' ? 'Male' : 'Female'}</span>
                             <span>DOB: {new Date(patient.dob).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+
+                    {/* Clinical Alerts Strip */}
+                    <div className="flex gap-4 mb-8 overflow-x-auto pb-2 scrollbar-none">
+                        <div className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 whitespace-nowrap">
+                            <ShieldCheck size={14} /> Comprehensive Coverage Active
+                        </div>
+                        <div className="bg-amber-50 text-amber-700 border border-amber-100 px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 whitespace-nowrap">
+                            <Stethoscope size={14} /> Follow-up Required: Malaria
                         </div>
                     </div>
                 </div>
