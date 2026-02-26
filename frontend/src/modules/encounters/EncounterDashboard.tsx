@@ -81,6 +81,7 @@ const EncounterDashboard: React.FC<EncounterDashboardProps> = ({ patient, onBack
                                     <p className="text-sm text-text-muted">Record clinical encounter for {m.id} module</p>
                                 </div>
                             </button>
+                        ))}
                     </div>
 
                     <div className="mt-12 scale-in">

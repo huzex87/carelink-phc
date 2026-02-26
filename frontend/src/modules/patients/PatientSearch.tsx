@@ -67,41 +67,42 @@ const PatientSearch: React.FC<PatientSearchProps> = ({ onSelect }) => {
                 </div>
 
                 <div className="space-y-4">
+                    {results.length > 0 ? (
                         results.map((patient) => (
-                    <div
-                        key={patient._id}
-                        onClick={() => onSelect(patient)}
-                        className="flex items-center justify-between p-4 bg-surface border border-border rounded-2xl hover:border-primary/50 transition-colors group cursor-pointer"
-                    >
-                        <div className="flex items-center gap-4">
-                            <div className="p-3 bg-background rounded-full">
-                                {patient.sex === 'M' ? <UserCircle className="text-primary" size={24} /> : <UserCircle className="text-accent" size={24} />}
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-lg">{patient.name}</h4>
-                                <div className="flex items-center gap-3 text-sm text-text-muted">
-                                    <span className="bg-primary/5 text-primary px-2 py-0.5 rounded font-mono font-bold">{patient.unique_id}</span>
-                                    <span>{patient.sex === 'M' ? 'Male' : 'Female'}</span>
-                                    <span>•</span>
-                                    <span>DOB: {new Date(patient.dob).toLocaleDateString()}</span>
+                            <div
+                                key={patient._id}
+                                onClick={() => onSelect(patient)}
+                                className="flex items-center justify-between p-4 bg-surface border border-border rounded-2xl hover:border-primary/50 transition-colors group cursor-pointer"
+                            >
+                                <div className="flex items-center gap-4">
+                                    <div className="p-3 bg-background rounded-full">
+                                        {patient.sex === 'M' ? <UserCircle className="text-primary" size={24} /> : <UserCircle className="text-accent" size={24} />}
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-lg">{patient.name}</h4>
+                                        <div className="flex items-center gap-3 text-sm text-text-muted">
+                                            <span className="bg-primary/5 text-primary px-2 py-0.5 rounded font-mono font-bold">{patient.unique_id}</span>
+                                            <span>{patient.sex === 'M' ? 'Male' : 'Female'}</span>
+                                            <span>•</span>
+                                            <span>DOB: {new Date(patient.dob).toLocaleDateString()}</span>
+                                        </div>
+                                    </div>
                                 </div>
+                                <button className="p-2 bg-primary/5 text-primary rounded-full group-hover:bg-primary group-hover:text-white transition-all">
+                                    <ArrowRight size={20} />
+                                </button>
                             </div>
-                        </div>
-                        <button className="p-2 bg-primary/5 text-primary rounded-full group-hover:bg-primary group-hover:text-white transition-all">
-                            <ArrowRight size={20} />
-                        </button>
-                    </div>
-                    ))
+                        ))
                     ) : query.length >= 2 ? (
-                    <div className="text-center py-12 text-text-muted">
-                        <User size={48} className="mx-auto mb-4 opacity-20" />
-                        <p>No patients found matching "{query}"</p>
-                    </div>
+                        <div className="text-center py-12 text-text-muted">
+                            <User size={48} className="mx-auto mb-4 opacity-20" />
+                            <p>No patients found matching "{query}"</p>
+                        </div>
                     ) : (
-                    <div className="text-center py-12 text-text-muted">
-                        <Search size={48} className="mx-auto mb-4 opacity-20" />
-                        <p>Start typing to search for patients</p>
-                    </div>
+                        <div className="text-center py-12 text-text-muted">
+                            <Search size={48} className="mx-auto mb-4 opacity-20" />
+                            <p>Start typing to search for patients</p>
+                        </div>
                     )}
                 </div>
             </div>
