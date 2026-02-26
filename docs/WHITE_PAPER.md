@@ -94,6 +94,12 @@ The system bridges clinical activity with supply chain management:
 - **Atomic Synchronization**: Stock levels are decremented in real-time within the clinical data lake during pharmacy fulfillment.
 - **Stock-Out Prevention**: Integrated alerts for "Months of Stock" (MOS) falling below critical safety thresholds.
 
+#### 4.5 Community & GIS Intelligence
+Extending CareLink PHC from the facility into the household:
+- **Mobility First**: Offline-first CHV mobile tools allow for household registration and symptom screening in the field.
+- **Geospatial Analytics**: Built-in GIS engine for real-time visualization of morbidity patterns vs. clinical logistics.
+- **Community Referral Loop**: Automated tracking of patients referred from the community to the facility level.
+
 ---
 
 ### 5. Security, Governance & Compliance
