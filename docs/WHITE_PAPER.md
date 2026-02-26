@@ -100,6 +100,10 @@ A "Security-by-Design" approach ensures the protection of sensitive patient PII.
     - Timestamp (When)
     - Resource URL (What)
     - Delta (Modification details)
+*   **Infrastructure Hardening**:
+    - **Containerization**: Single-command orchestration via `Docker Compose`.
+    - **Nginx Protection**: Reverse proxy with Gzip compression and security headers (`X-Frame-Options`, `CSP`).
+    - **Environment Segregation**: Standardized `.env` schema for secure credential management.
 *   **RBAC & MFA**: Integrated Keycloak SSO provides role-based access control and multi-factor authentication for data entry clerks and administrators.
 *   **Data Sovereignty**: The State Ministry of Health retains full ownership. All data resides in localized infrastructure within state borders.
 
@@ -114,6 +118,7 @@ A "Security-by-Design" approach ensures the protection of sensitive patient PII.
 | **Phase 3** | Hardening | Security Audit, DHIS2 Bridge, Load Tests | ✅ COMPLETED |
 | **Phase 4** | Scale | CI/CD, Lab/Pharmacy Modules, Training SOP | ✅ COMPLETED |
 | **Phase 5** | Intelligence| Epidemic Alerting, Referrals, OIDC SSO | ✅ COMPLETED |
+| **Phase 6** | Infrastructure| Docker, Nginx Hardening, Env Security | ✅ COMPLETED |
 
 ---
 
