@@ -81,7 +81,17 @@ const EncounterDashboard: React.FC<EncounterDashboardProps> = ({ patient, onBack
                                     <p className="text-sm text-text-muted">Record clinical encounter for {m.id} module</p>
                                 </div>
                             </button>
-                        ))}
+                    </div>
+
+                    <div className="mt-12 scale-in">
+                        <ClinicalTimeline
+                            events={[
+                                { id: 'evt-1', type: 'OPD', title: 'Malaria Treatment', subtitle: 'Dr. Isah Muhammed | Kano Municipal PHC', date: '2026-02-24', details: 'Positive RDT, Artemether/Lumefantrine prescribed' },
+                                { id: 'evt-2', type: 'LAB', title: 'Malaria RDT', subtitle: 'Lab Tech Habu | Kano Municipal PHC', date: '2026-02-24', status: 'verified', details: 'Result: POSITIVE (+++)' },
+                                { id: 'evt-3', type: 'RX', title: 'Antimalarial Dispensed', subtitle: 'Pharmacist Yusuf | Central Dispensary', date: '2026-02-24', details: 'Artemether/Lumefantrine (20/120mg)' },
+                                { id: 'evt-4', type: 'REF', title: 'General Referral', subtitle: 'to Murtala Muhammad SH', date: '2026-02-20', status: 'accepted', details: 'Severe persistent symptoms for tertiary consultation' },
+                            ]}
+                        />
                     </div>
                 </div>
             ) : activeModule === 'OPD' ? (
