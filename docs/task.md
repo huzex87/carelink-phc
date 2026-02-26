@@ -50,3 +50,8 @@
 - [x] Production Environment Provisioning (Staging/Prod)
 - [x] Extended Clinical Modules (Lab & Pharmacy)
 - [x] Field Pilot & User Training Manuals
+
+## Phase 5: Intelligence & Extended Ecosystem [x]
+- [x] Epidemic Alerting System (ML-based Morbidity Spikes)
+- [x] Digital Referral Pathway (PHC to Secondary Care)
+- [x] Institutional SSO Integration (Keycloak/OIDC)

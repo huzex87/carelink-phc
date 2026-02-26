@@ -40,6 +40,18 @@ graph TD
     Engine --> Dashboard
     Engine --> Bridge
     Bridge --> Queue
+
+    subgraph "Layer 5: Intelligence (Extended Ecosystem)"
+        ML["Epidemic Alert Engine"]
+        Referral["Digital Referral Chain"]
+        SSO["Institutional SSO (Keycloak)"]
+    end
+
+    Engine --> ML
+    ML --> Dashboard
+    Postgres --> Referral
+    SSO --> PWA
+    SSO --> Postgres
 ```
 
 ---
@@ -100,7 +112,8 @@ A "Security-by-Design" approach ensures the protection of sensitive patient PII.
 | **Phase 1** | Core Clinical | EHR Modules (OPD, ANC, IMM, NCD) | ✅ COMPLETED |
 | **Phase 2** | Intelligence | Indicator Engine, Facility Dashboards | ✅ COMPLETED |
 | **Phase 3** | Hardening | Security Audit, DHIS2 Bridge, Load Tests | ✅ COMPLETED |
-| **Phase 4** | Scale | CI/CD, Lab/Pharmacy, ML-Outbreak Prediction | ⏳ UPCOMING |
+| **Phase 4** | Scale | CI/CD, Lab/Pharmacy Modules, Training SOP | ✅ COMPLETED |
+| **Phase 5** | Intelligence| Epidemic Alerting, Referrals, OIDC SSO | ✅ COMPLETED |
 
 ---
 

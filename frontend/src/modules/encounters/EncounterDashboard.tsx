@@ -3,7 +3,8 @@ import OPDForm from './OPDForm';
 import ANCForm from './ANCForm';
 import IMMForm from './IMMForm';
 import NCDForm from './NCDForm';
-import { User, ChevronLeft, Stethoscope, Baby, HeartPulse, ShieldCheck } from 'lucide-react';
+import ReferralModule from '../patients/ReferralModule';
+import { User, ChevronLeft, Stethoscope, Baby, HeartPulse, ShieldCheck, Share2 } from 'lucide-react';
 
 interface Patient {
     _id: string;
@@ -19,13 +20,14 @@ interface EncounterDashboardProps {
 }
 
 const EncounterDashboard: React.FC<EncounterDashboardProps> = ({ patient, onBack }) => {
-    const [activeModule, setActiveModule] = useState<'selection' | 'OPD' | 'ANC' | 'IMM' | 'NCD'>('selection');
+    const [activeModule, setActiveModule] = useState<'selection' | 'OPD' | 'ANC' | 'IMM' | 'NCD' | 'REF'>('selection');
 
     const modules = [
         { id: 'OPD', name: 'Outpatient (OPD)', icon: <Stethoscope size={24} />, color: 'text-primary', bg: 'bg-primary/10' },
         { id: 'ANC', name: 'Antenatal (ANC)', icon: <HeartPulse size={24} />, color: 'text-accent', bg: 'bg-accent/10' },
         { id: 'IMM', name: 'Immunization', icon: <Baby size={24} />, color: 'text-secondary', bg: 'bg-secondary/10' },
         { id: 'NCD', name: 'NCD Clinic', icon: <ShieldCheck size={24} />, color: 'text-orange-500', bg: 'bg-orange-50/50' },
+        { id: 'REF', name: 'Referral', icon: <Share2 size={24} />, color: 'text-primary', bg: 'bg-primary/10' },
     ];
 
     return (
@@ -102,6 +104,14 @@ const EncounterDashboard: React.FC<EncounterDashboardProps> = ({ patient, onBack
                         <button onClick={() => setActiveModule('selection')} className="text-sm text-primary font-bold hover:underline">Change Module</button>
                     </div>
                     <NCDForm patientId={patient.unique_id} onComplete={() => setActiveModule('selection')} />
+                </div>
+            ) : activeModule === 'REF' ? (
+                <div className="animate-fade-in">
+                    <div className="flex items-center justify-between mb-8 px-6">
+                        <h3 className="text-2xl font-bold">Patient Referral</h3>
+                        <button onClick={() => setActiveModule('selection')} className="text-sm text-primary font-bold hover:underline">Change Module</button>
+                    </div>
+                    <ReferralModule />
                 </div>
             ) : null}
         </div>
