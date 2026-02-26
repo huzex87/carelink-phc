@@ -32,7 +32,7 @@ const PatientSearch: React.FC<PatientSearchProps> = ({ onSelect }) => {
                         name: { $regex: new RegExp(query, 'i') }
                     }
                 });
-                setResults(result.docs as Patient[]);
+                setResults(result.docs as unknown as Patient[]);
             } catch (error) {
                 console.error('Search error:', error);
             }
