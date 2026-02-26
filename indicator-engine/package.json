@@ -1,0 +1,21 @@
+{
+    "name": "indicator-engine",
+    "version": "1.0.0",
+    "description": "CareLink Health Intelligence Engine",
+    "type": "module",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc",
+        "start": "node dist/index.js"
+    },
+    "dependencies": {
+        "sequelize": "^6.37.7",
+        "pg": "^8.19.0",
+        "pg-hstore": "^2.3.4",
+        "dotenv": "^17.3.1"
+    },
+    "devDependencies": {
+        "@types/node": "^20.0.0",
+        "typescript": "^5.0.0"
+    }
+}

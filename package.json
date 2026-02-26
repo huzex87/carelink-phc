@@ -1,0 +1,10 @@
+{
+    "name": "carelink-phc",
+    "version": "1.0.0",
+    "description": "CareLink PHC Monorepo",
+    "private": true,
+    "scripts": {
+        "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install && cd ../indicator-engine && npm install && cd ..",
+        "build:all": "cd backend && npm run build && cd ../frontend && npm run build && cd ../indicator-engine && npm run build && cd .."
+    }
+}
