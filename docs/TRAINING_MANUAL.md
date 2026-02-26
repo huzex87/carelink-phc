@@ -22,10 +22,16 @@ Welcome to CareLink PHC. This system is designed to reduce your paperwork and en
 -   Pharmacists can view pending prescriptions.
 -   Click **Fulfill** to dispense medication and automatically update the facility stock level.
 
-### 3. Managerial Oversight
-Facility managers can use the **Analytics Dashboard** to view:
+#### 2.5 Community Outreach (CHVs)
+-   **Household Census**: Register new households in the field using the mobile dashboard.
+-   **Screening**: Record basic symptoms and refer high-risk individuals to the facility.
+-   **Follow-up**: Track referred patients to ensure they completed their clinical visit.
+
+### 3. Managerial Oversight & GIS
+Facility and LGA managers can use the **Analytics & GIS Hubs** to view:
 -   **OPD Trends**: Are we seeing more malaria cases than last week?
--   **ANC Coverage**: How many pregnant women are completing their 4th visit?
+-   **GIS Heatmaps**: Visualize where disease clusters are forming geographically.
+-   **Outreach Density**: See which communities are being reached by field volunteers.
 -   **Stock Alerts**: Which drugs are running low?
 
 ### 4. Offline Resilience
