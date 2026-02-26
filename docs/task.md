@@ -66,3 +66,8 @@
 - [x] Automated Drug Consumption Tracking (from Prescriptions)
 - [x] Inventory Reordering & Supply Chain Analytics
 - [x] Longitudinal Patient Timeline (Unified Care History)
+
+## Phase 8: Community Outreach & GIS Intelligence [/]
+- [/] Community Health Volunteer (CHV) Mobile Workflow [/]
+- [ ] GIS Heatmapping (Disease vs. Resource Analytics) [ ]
+- [ ] Offline-First Field Sync for Community Outreach [ ]

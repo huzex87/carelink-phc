@@ -109,6 +109,10 @@ A "Security-by-Design" approach ensures the protection of sensitive patient PII.
     - **Containerization**: Single-command orchestration via `Docker Compose`.
     - **Nginx Protection**: Reverse proxy with Gzip compression and security headers (`X-Frame-Options`, `CSP`).
     - **Environment Segregation**: Standardized `.env` schema for secure credential management.
+*   **GIS Intelligence**:
+    - **Spatial Mapping**: Geolocation tagging for patients and households.
+    - **Heatmapping**: Real-time epidemiological spatial analytics visualizing morbidity hot-zones.
+    - **Facility Resource GIS**: Visualizing facility locations relative to clinical demand.
 *   **RBAC & MFA**: Integrated Keycloak SSO provides role-based access control and multi-factor authentication for data entry clerks and administrators.
 *   **Data Sovereignty**: The State Ministry of Health retains full ownership. All data resides in localized infrastructure within state borders.
 
@@ -125,6 +129,7 @@ A "Security-by-Design" approach ensures the protection of sensitive patient PII.
 | **Phase 5** | Intelligence| Epidemic Alerting, Referrals, OIDC SSO | ✅ COMPLETED |
 | **Phase 6** | Infrastructure| Docker, Nginx Hardening, Env Security | ✅ COMPLETED |
 | **Phase 7** | Logistics| LMIS Integration, Longitudinal Timeline | ✅ COMPLETED |
+| **Phase 8** | Spatial | CHV Mobile Hub, GIS Heatmapping | ✅ COMPLETED |
 
 ---
 

@@ -15,6 +15,7 @@ The system is built on a 5-layer architecture designed for offline resilience an
 | **Layer 3** | Analytics (Executive Oversight Hub) | ✅ DELIVERED |
 | **Layer 4** | Interoperability (DHIS2 ADX Bridge) | ✅ DELIVERED |
 | **Layer 5** | Extended Ecosystem (ML-Alerting, Referrals, SSO) | ✅ DELIVERED |
+| **Layer 6** | Logistics (LMIS & Clinical Timeline) | ✅ DELIVERED |
 
 ---
 
