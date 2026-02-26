@@ -1,14 +1,24 @@
 import React from 'react';
-import { Users, BarChart2, Settings, LogOut, Activity } from 'lucide-react';
+import {
+    Users,
+    BarChart2,
+    Settings,
+    LogOut,
+    Activity,
+    Microscope,
+    Package
+} from 'lucide-react';
 
 interface SidebarProps {
-    activeView: 'patients' | 'analytics';
-    onViewChange: (view: 'patients' | 'analytics') => void;
+    activeView: 'patients' | 'analytics' | 'lab' | 'pharmacy';
+    onViewChange: (view: 'patients' | 'analytics' | 'lab' | 'pharmacy') => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ activeView, onViewChange }) => {
     const navItems = [
         { id: 'patients', label: 'Patients', icon: <Users size={20} /> },
+        { id: 'lab', label: 'Diagnostic Lab', icon: <Microscope size={20} /> },
+        { id: 'pharmacy', label: 'Pharmacy', icon: <Package size={20} /> },
         { id: 'analytics', label: 'Analytics', icon: <BarChart2 size={20} /> },
     ];
 
@@ -18,7 +28,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, onViewChange }) => {
                 <div className="p-2 bg-primary text-white rounded-lg shadow-lg shadow-primary/20">
                     <Activity size={24} />
                 </div>
-                <span className="text-xl font-bold tracking-tight">CareLink</span>
+                <span className="text-xl font-bold tracking-tight text-text-main">CareLink</span>
             </div>
 
             <nav className="flex-1 px-4 py-6 space-y-2">
@@ -27,8 +37,8 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, onViewChange }) => {
                         key={item.id}
                         onClick={() => onViewChange(item.id as any)}
                         className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${activeView === item.id
-                                ? 'bg-primary/10 text-primary shadow-sm'
-                                : 'text-text-muted hover:bg-background hover:text-text-main'
+                            ? 'bg-primary/10 text-primary shadow-sm'
+                            : 'text-text-muted hover:bg-background hover:text-text-main'
                             }`}
                     >
                         {item.icon}
