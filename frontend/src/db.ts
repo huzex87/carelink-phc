@@ -1,4 +1,4 @@
-import PouchDB from 'pouchdb';
+import PouchDB from './pouchdb-init';
 import PouchDBFind from 'pouchdb-find';
 
 PouchDB.plugin(PouchDBFind);

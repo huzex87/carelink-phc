@@ -9,8 +9,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      'pouchdb': 'pouchdb/dist/pouchdb.js',
-      'pouchdb-find': 'pouchdb/dist/pouchdb.find.js'
+      'pouchdb': 'pouchdb/dist/pouchdb.js'
     }
   }
 })
