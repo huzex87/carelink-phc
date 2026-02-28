@@ -10,11 +10,14 @@ const App: React.FC = () => {
   const [activeView, setActiveView] = useState<'patients' | 'analytics' | 'lab' | 'pharmacy' | 'alerts'>('patients');
 
   return (
-    <div className="flex min-h-screen bg-background text-text-main font-sans selection:bg-primary/20">
+    <div className="flex min-h-screen">
       <Sidebar activeView={activeView} onViewChange={setActiveView} />
 
-      <main className="flex-1 ml-64 min-h-screen pb-20">
-        <div className="animate-fade-in py-8">
+      <main className="flex-1 ml-72 min-h-screen relative">
+        {/* Top Gradient Fade for a polished blend */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent z-0 pointer-events-none" />
+
+        <div className="relative z-10 px-8 py-8 animate-fade-in pb-24">
           {activeView === 'patients' && <PatientDashboard />}
           {activeView === 'analytics' && <FacilityDashboard />}
           {activeView === 'lab' && <LabDashboard />}

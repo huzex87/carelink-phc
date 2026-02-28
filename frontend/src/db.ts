@@ -1,6 +1,7 @@
 import PouchDB from './pouchdb-init';
 import PouchDBFind from 'pouchdb-find';
 
+// @ts-ignore
 PouchDB.plugin(PouchDBFind);
 
 // Local Database Initialization
