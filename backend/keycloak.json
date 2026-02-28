@@ -1,0 +1,8 @@
+{
+    "realm": "carelink-phc",
+    "auth-server-url": "http://localhost:8080/auth/",
+    "ssl-required": "external",
+    "resource": "carelink-backend",
+    "bearer-only": true,
+    "confidential-port": 0
+}

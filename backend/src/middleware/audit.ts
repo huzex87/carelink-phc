@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
+import crypto from 'crypto';
 
 /**
  * Centralized Audit Middleware
@@ -6,9 +7,12 @@ import type { Request, Response, NextFunction } from 'express';
  */
 export const auditLogger = (req: Request, res: Response, next: NextFunction) => {
     const start = Date.now();
-
-    // Capture the original send to intercept the response status
     const originalSend = res.send;
+
+    let payloadHash = undefined;
+    if (req.method === 'POST' || req.method === 'PUT' || req.method === 'PATCH') {
+        payloadHash = crypto.createHash('sha256').update(JSON.stringify(req.body || {})).digest('hex');
+    }
 
     res.send = function (body) {
         const duration = Date.now() - start;
@@ -18,16 +22,16 @@ export const auditLogger = (req: Request, res: Response, next: NextFunction) => 
             url: req.originalUrl,
             status: res.statusCode,
             duration: `${duration}ms`,
-            ip: req.ip,
+            ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
             userAgent: req.get('user-agent'),
-            // In a real system, we'd extract the user ID from the JWT here
-            user: 'SuperAdmin-PHC-001'
+            payloadHash: payloadHash,
+            // Extract subject identifier from Keycloak token if authenticated
+            user: (req as any).kauth?.grant?.access_token?.content?.sub || 'anonymous'
         };
 
-        // Log to console for visibility during dev
-        // In production, this would go to a secure AuditLog table or external ELK stack
+        // Output structured JSON for SIEM ingestion
         if (req.method !== 'GET' || res.statusCode >= 400) {
-            console.log(`[AUDIT] ${JSON.stringify(auditEntry)}`);
+            console.log(`[SIEM-AUDIT] ${JSON.stringify(auditEntry)}`);
         }
 
         return originalSend.apply(res, arguments as any);
