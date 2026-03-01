@@ -1,4 +1,11 @@
-import { Encounter } from '../../backend/src/models/encounter.js'; // Note: In a real project, these might be shared types
+export interface Encounter {
+    id: string;
+    patient_id: string;
+    facility_id: string;
+    date: Date;
+    service_type: string;
+    data: any;
+}
 
 export interface IndicatorResult {
     id: string;

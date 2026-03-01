@@ -1,4 +1,4 @@
-import { Encounter } from '../../backend/src/models/encounter.js';
+import { Encounter } from './engine.js';
 
 export interface EpidemicAlert {
     id: string;

@@ -1,14 +1,17 @@
 # CareLink PHC: Digital Public Health Infrastructure
-## Comprehensive Technical White Paper | Version 1.1 (February 2026)
+
+## Comprehensive Technical White Paper | Version 1.2 (March 2026)
 
 ---
 
 ### 1. Executive Summary
+
 CareLink PHC is a world-class, purpose-built Digital Health solution designed to eliminate the inefficiencies of manual health management in Primary Health Care (PHC) facilities. It bridges the gap between point-of-care clinical workflows and state-level strategic decision-making through a 4-layer architectural model that automates National Health Management Information System (NHMIS) reporting.
 
 ---
 
 ### 2. Architectural Blueprint
+
 The system follows a strictly decoupled, layered architecture to ensure modularity, scalability, and ease of maintenance.
 
 ```mermaid
@@ -47,16 +50,25 @@ graph TD
         SSO["Institutional SSO (Keycloak)"]
     end
 
+    subgraph "Layer 6: Resilience (Production Hardening)"
+        Logging["Structured JSON Logging"]
+        Metrics["Prometheus /metrics"]
+        Swagger["OpenAPI Documentation"]
+    end
+
     Engine --> ML
     ML --> Dashboard
     Postgres --> Referral
     SSO --> PWA
-    SSO --> Postgres
+    PWA --> Logging
+    Postgres --> Metrics
+    Bridge --> Swagger
 ```
 
 ---
 
 ### 3. Deep-Dive: Service Modules
+
 CareLink PHC implements four mission-critical clinical modules, each meticulously aligned with NHMIS Version 2023+ standards.
 
 | Module | Focus Area | Key Data Points | Impact |
@@ -71,77 +83,52 @@ CareLink PHC implements four mission-critical clinical modules, each meticulousl
 ### 4. Technical Specifications
 
 #### 4.1 Offline-First Synchronization
+
 To excel in environments with intermittent connectivity, CareLink utilizes a "Couch-Pouch" synchronization protocol:
+
 - **Local Persistence**: Data is written to `PouchDB` (IndexedDB) with millisecond latency.
 - **Bi-directional Sync**: When online, the client initiates a sync with the `CouchDB` gateway.
 - **Master Lake**: Data is eventually aggregated in a `PostgreSQL` instance for complex analytical queries.
 
 #### 4.2 The Indicator Engine
+
 The **Indicator Engine** is the brain of the system. It uses a non-destructive processing model:
+
 - **Rule Engine**: Indicators like `ANC COVERAGE` or `MALARIA TREND` are defined as computational rules.
 - **Aggregation**: It processes thousands of individual clinical encounters in sub-seconds to produce LGA-level summaries.
 - **Data Dictionary**:
-    - `ANC_COVERAGE`: `(Encounters[service=ANC, visit=1] / Target_Population) * 100`
-    - `MORBIDITY_PROFILE`: Grouping of ICD-10 codes by frequency per facility.
+  - `ANC_COVERAGE`: `(Encounters[service=ANC, visit=1] / Target_Population) * 100`
+  - `MORBIDITY_PROFILE`: Grouping of ICD-10 codes by frequency per facility.
 
 #### 4.3 DHIS2 Interoperability (Layer 4)
+
 Interoperability is achieved via the `DHIS2 Bridge`:
+
 - **Sync Manager**: A persistent queue that handles retries and back-off strategies, ensuring data reaches the National Instance even on poor 3G networks.
 
 #### 4.4 Integrated Logistics (LMIS)
+
 The system bridges clinical activity with supply chain management:
+
 - **AMC Forecasting**: Automatically calculates **Average Monthly Consumption** from dispensed prescriptions.
 - **Atomic Synchronization**: Stock levels are decremented in real-time within the clinical data lake during pharmacy fulfillment.
 - **Stock-Out Prevention**: Integrated alerts for "Months of Stock" (MOS) falling below critical safety thresholds.
 
 #### 4.5 Community & GIS Intelligence
+
 Extending CareLink PHC from the facility into the household:
+
 - **Mobility First**: Offline-first CHV mobile tools allow for household registration and symptom screening in the field.
 - **Geospatial Analytics**: Built-in GIS engine for real-time visualization of morbidity patterns vs. clinical logistics.
 - **Community Referral Loop**: Automated tracking of patients referred from the community to the facility level.
 
 ---
 
+---
+
 ### 5. Security, Governance & Compliance
+
 A "Security-by-Design" approach ensures the protection of sensitive patient PII.
-
-*   **AES-256 Encryption**: Data at rest in both local and central databases is encrypted.
-*   **Centralized Audit Trails**: The `auditLogger` middleware captures:
-    - Actor ID (Who)
-    - Timestamp (When)
-    - Resource URL (What)
-    - Delta (Modification details)
-*   **Infrastructure Hardening**:
-    - **Containerization**: Single-command orchestration via `Docker Compose`.
-    - **Nginx Protection**: Reverse proxy with Gzip compression and security headers (`X-Frame-Options`, `CSP`).
-    - **Environment Segregation**: Standardized `.env` schema for secure credential management.
-*   **GIS Intelligence**:
-    - **Spatial Mapping**: Geolocation tagging for patients and households.
-    - **Heatmapping**: Real-time epidemiological spatial analytics visualizing morbidity hot-zones.
-    - **Facility Resource GIS**: Visualizing facility locations relative to clinical demand.
-*   **RBAC & MFA**: Integrated Keycloak SSO provides role-based access control and multi-factor authentication for data entry clerks and administrators.
-*   **Data Sovereignty**: The State Ministry of Health retains full ownership. All data resides in localized infrastructure within state borders.
-
----
-
-#### 4.6 Cloud Deployment (Vercel)
-CareLink PHC is optimized for high-performance cloud execution:
-- **Serverless API**: Adapted Express backend to run as Vercel Serverless Functions.
-- **Edge Routing**: Global distribution of the clinical PWA for sub-millisecond local performance.
-- **Auto-Scaling**: Automatic scaling during epidemiological spikes or surges in facility data volume.
-
-#### 4.7 World-Class Design System & UX
-To ensure high adoption rates among clinicians, CareLink PHC features a premium, state-of-the-art interface:
-- **Motion & Fluidity**: Utilizes `framer-motion` for shared layout transitions, micro-interactions, and staggered data rendering, significantly reducing cognitive load.
-- **Glassmorphism Layering**: A unified CSS architecture leveraging Tailwind V4 gradients, backdrop-filters, and soft shadowing to create deep visual hierarchies.
-- **High-Fidelity Components**: Specialized clinical forms, massive-scale debounced search inputs, and dynamic epidemiology charts using custom metric animations.
-
----
-
-### 5. Security, Governance & Compliance
-...
-[Existing content]
-...
 
 ---
 
@@ -164,9 +151,26 @@ To ensure high adoption rates among clinicians, CareLink PHC features a premium,
 
 ---
 
-### 7. Future Horizons (Phase 11 & Beyond)
-- **AI-Driven Forecasting**: Using deep learning to predict vaccine stock-outs and outbreaks.
-- **Telemedicine Integration**: Scaling specialist consults via the unified care portal.
+### 7. Governance, Security & Reliability
+
+#### 7.1 Production Hardening
+
+- **Edge Security**: Integrated `helmet` middleware for strict CSP, XSS protection, and frameguard.
+- **Rate Limiting**: Tiered rate protection across all API routes to prevent DoS/Brute-force attacks.
+- **Audit Logging**: Mandatory JSON-structured audit trails for every PII-related transaction.
+- **Identity Foundation**: Enterprise-grade RBAC and MFA powered by Keycloak institutional SSO.
+
+#### 7.2 Cloud Observability
+
+- **Prometheus Metrics**: High-granularity `/metrics` endpoint for real-time latency and throughput monitoring.
+- **Log Aggregation**: Standardized Winston-driven structured logging for effortless ELK/Splunk integration.
+- **Self-Healing**: Automated health diagnostics checking database connectivity and system environment health.
+
+### 8. Future Horizons (2026+)
+
+- **Generative Clinician Assistant**: Integration with lightweight Med-LLMs for automated discharge summary generation and clinical coding suggestions.
+- **IoT Cold-Chain Monitoring**: Real-time vaccine refrigerator telemetry integrated directly into the Logistics Module.
+- **State-Wide EOC Dashboard**: A command-and-control interface for the State Emergency Operations Center during outbreaks.
 
 ---
 **Standard**: ISO/TC 215 Medical Informatics | HL7 FHIR Allied

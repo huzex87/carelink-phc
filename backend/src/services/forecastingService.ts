@@ -45,8 +45,11 @@ export class ForecastingService {
         consumptionData.forEach(c => {
             const updatedAt = c.getDataValue('updatedAt');
             if (updatedAt) {
-                const dateStr = new Date(updatedAt).toISOString().split('T')[0];
-                dailyConsumption[dateStr] = (dailyConsumption[dateStr] || 0) + 1;
+                const parts = new Date(updatedAt).toISOString().split('T');
+                const dateStr = parts[0];
+                if (dateStr) {
+                    dailyConsumption[dateStr] = (dailyConsumption[dateStr] || 0) + 1;
+                }
             }
         });
 

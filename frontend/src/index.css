@@ -1,5 +1,33 @@
 @import "tailwindcss";
-@config "../tailwind.config.js";
+
+@theme {
+  --color-primary: #008751;
+  /* Official Nigerian/Katsina Green */
+  --color-primary-light: #00a86b;
+  --color-primary-dark: #006b40;
+  --color-secondary: #ffffff;
+  --color-accent: #e4002b;
+  /* State Red for critical alerts */
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-text-main: #0f172a;
+  --color-text-muted: #64748b;
+  --color-border: #e2e8f0;
+  --color-error: #ef4444;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+
+  --shadow-glass: 0 8px 32px 0 rgba(0, 135, 81, 0.08);
+  --shadow-glass-sm: 0 4px 16px 0 rgba(0, 135, 81, 0.05);
+  --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.04);
+
+  --background-image-glass-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.8) 100%);
+  --background-image-mesh-gradient: radial-gradient(at 0% 0%, rgba(0, 135, 81, 0.02) 0, transparent 50%),
+    radial-gradient(at 50% 0%, rgba(248, 250, 252, 1) 0, transparent 100%),
+    radial-gradient(at 100% 0%, rgba(0, 135, 81, 0.01) 0, transparent 50%);
+
+  --shadow-inner-light: inset 0 1px 1px 0 rgba(255, 255, 255, 0.8);
+}
 
 @layer base {
   body {
