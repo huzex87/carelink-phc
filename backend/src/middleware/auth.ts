@@ -19,8 +19,10 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     }
 
     try {
-        // In a production environment, this would verify against multiple public keys from OIDC providers
-        const secret: string = process.env.JWT_SECRET ? String(process.env.JWT_SECRET) : 'carelink-institutional-key-2026';
+        const secret = process.env.JWT_SECRET;
+        if (!secret) {
+            throw new Error('JWT_SECRET is not defined in the environment');
+        }
         const decoded = jwt.verify(token, secret);
 
         // Attach institutional identity to request

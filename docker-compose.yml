@@ -13,9 +13,13 @@ services:
       - carelink-data:/var/lib/postgresql/data
     networks:
       - carelink-net
+    deploy:
+      resources:
+        limits:
+          memory: 512M
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
-      interval: 5s
+      interval: 10s
       timeout: 5s
       retries: 5
 
@@ -32,7 +36,18 @@ services:
       DB_USER: ${DB_USER:-postgres}
       DB_PASS: ${DB_PASS:-postgres}
       JWT_SECRET: ${JWT_SECRET}
+      SESSION_SECRET: ${SESSION_SECRET}
+      NODE_ENV: production
       PORT: 3001
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     networks:
       - carelink-net
     restart: always
@@ -49,6 +64,10 @@ services:
       - ./frontend/dist:/usr/share/nginx/html:ro
     depends_on:
       - api
+    deploy:
+      resources:
+        limits:
+          memory: 256M
     networks:
       - carelink-net
     restart: always

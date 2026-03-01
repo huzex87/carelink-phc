@@ -9,6 +9,8 @@ export class Encounter extends Model {
     declare service_type: string;
     declare clinician_id: string;
     declare referral_status: string;
+    declare risk_score: number;
+    declare risk_level: 'LOW' | 'MEDIUM' | 'HIGH';
     declare data: any; // Dynamic encounter data (vitals, diagnoses, etc.)
 }
 
@@ -20,6 +22,8 @@ Encounter.init({
     service_type: { type: DataTypes.STRING, allowNull: false },
     clinician_id: { type: DataTypes.STRING, allowNull: false },
     referral_status: { type: DataTypes.STRING },
+    risk_score: { type: DataTypes.INTEGER, defaultValue: 0 },
+    risk_level: { type: DataTypes.ENUM('LOW', 'MEDIUM', 'HIGH'), defaultValue: 'LOW' },
     data: { type: DataTypes.JSONB, defaultValue: {} }
 }, {
     sequelize,

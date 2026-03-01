@@ -6,6 +6,7 @@ import NCDForm from './NCDForm';
 import ReferralModule from '../patients/ReferralModule';
 import ClinicalTimeline from '../../components/ClinicalTimeline';
 import { User, ChevronLeft, Stethoscope, Baby, HeartPulse, ShieldCheck, Share2 } from 'lucide-react';
+import RiskAlertSystem, { RiskAlert } from '../clinician/RiskAlertSystem';
 
 interface Patient {
     _id: string;
@@ -13,6 +14,7 @@ interface Patient {
     sex: string;
     dob: string;
     unique_id: string;
+    riskAlert?: RiskAlert; // Added risk alert data
 }
 
 interface EncounterDashboardProps {
@@ -22,6 +24,14 @@ interface EncounterDashboardProps {
 
 const EncounterDashboard: React.FC<EncounterDashboardProps> = ({ patient, onBack }) => {
     const [activeModule, setActiveModule] = useState<'selection' | 'OPD' | 'ANC' | 'IMM' | 'NCD' | 'REF'>('selection');
+
+    // Mock high-risk alert for demonstration if it's a specific patient or just for the UI showcase
+    const demoAlert: RiskAlert = {
+        score: 7,
+        level: 'HIGH',
+        indicators: ['RR: 26', 'SpO2: 91%', 'Temp: 38.5°C'],
+        timestamp: new Date().toISOString()
+    };
 
     const modules = [
         { id: 'OPD', name: 'Outpatient (OPD)', icon: <Stethoscope size={24} />, color: 'text-primary', bg: 'bg-primary/10' },
@@ -34,33 +44,28 @@ const EncounterDashboard: React.FC<EncounterDashboardProps> = ({ patient, onBack
     return (
         <div className="max-w-4xl mx-auto p-6 animate-fade-in">
             {/* Patient Header */}
-            <div className="glass-card p-6 mb-8 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                    <button onClick={onBack} className="p-2 hover:bg-background rounded-full transition-colors">
-                        <ChevronLeft size={24} />
-                    </button>
-                    <div className="p-3 bg-primary/10 text-primary rounded-full">
-                        <User size={32} />
-                    </div>
-                    <div>
-                        <h2 className="text-2xl font-bold">{patient.name}</h2>
-                        <div className="flex gap-4 text-sm text-text-muted mt-1">
-                            <span className="font-mono font-bold text-primary">{patient.unique_id}</span>
-                            <span>{patient.sex === 'M' ? 'Male' : 'Female'}</span>
-                            <span>DOB: {new Date(patient.dob).toLocaleDateString()}</span>
+            <div className="glass-card p-6 mb-8">
+                <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-4">
+                        <button onClick={onBack} className="p-2 hover:bg-background rounded-full transition-colors">
+                            <ChevronLeft size={24} />
+                        </button>
+                        <div className="p-3 bg-primary/10 text-primary rounded-full">
+                            <User size={32} />
                         </div>
-                    </div>
-
-                    {/* Clinical Alerts Strip */}
-                    <div className="flex gap-4 mb-8 overflow-x-auto pb-2 scrollbar-none">
-                        <div className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 whitespace-nowrap">
-                            <ShieldCheck size={14} /> Comprehensive Coverage Active
-                        </div>
-                        <div className="bg-amber-50 text-amber-700 border border-amber-100 px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 whitespace-nowrap">
-                            <Stethoscope size={14} /> Follow-up Required: Malaria
+                        <div>
+                            <h2 className="text-2xl font-bold">{patient.name}</h2>
+                            <div className="flex gap-4 text-sm text-text-muted mt-1">
+                                <span className="font-mono font-bold text-primary">{patient.unique_id}</span>
+                                <span>{patient.sex === 'M' ? 'Male' : 'Female'}</span>
+                                <span>DOB: {new Date(patient.dob).toLocaleDateString()}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                {/* Dynamic Patient Risk Alert System */}
+                <RiskAlertSystem alert={patient.name.includes('Sani') ? demoAlert : undefined} />
             </div>
 
             {activeModule === 'selection' ? (
