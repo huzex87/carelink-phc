@@ -86,7 +86,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, onViewChange }) => {
                     <span className="text-[11px] font-extrabold text-green-500 tracking-widest uppercase">Secure Link</span>
                 </div>
                 <p className="text-xs text-zinc-600 dark:text-zinc-400 font-medium relative">Connected to DHIS2 Core</p>
-                <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-1 font-mono uppercase">Node: CHC-ABUJA-01</p>
+                <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-1 font-mono uppercase">Node: CHC-KATSINA-01</p>
             </div>
         </aside>
     );

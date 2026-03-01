@@ -51,7 +51,7 @@ app.use(helmet({
 }));
 
 const allowedOrigins = env.NODE_ENV === 'production'
-  ? ['https://carelink-phc.vercel.app', 'https://carelink.jigawa.gov.ng']
+  ? ['https://carelink-phc.vercel.app', 'https://carelink.katsina.gov.ng']
   : ['http://localhost:5173', 'http://localhost:3000'];
 
 app.use(cors({
