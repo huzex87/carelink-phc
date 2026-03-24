@@ -1,6 +1,6 @@
 # CareLink PHC: Digital Public Health Infrastructure
 
-## Comprehensive Technical White Paper | Version 1.3.0 (March 2026)
+## Comprehensive Technical White Paper | Version 1.4.0 (March 2026)
 
 ---
 
@@ -149,6 +149,9 @@ A "Security-by-Design" approach ensures the protection of sensitive patient PII.
 | **Phase 11** | Proactive   | AI Forecasting, NEWS2 Alerts             | ✅ COMPLETED |
 | **Phase 12** | Resilient   | Hardening, Observability, Swagger         | ✅ COMPLETED |
 | **Phase 13** | AI Assist   | Gemini Clinical Assistant, Magic Suggest | ✅ COMPLETED |
+| **Phase 14** | Tele-Health | Patient Portal, Remote Vitals Dashboard  | 🚀 ROADMAP   |
+| **Phase 15** | IoT Logistics| Real-time Cold-Chain Thermal Telemetry  | 🚀 ROADMAP   |
+| **Phase 16** | Population  | GIS Epidemiology & ML Outbreak Studio    | 🚀 ROADMAP   |
 
 ---
 
@@ -169,9 +172,9 @@ A "Security-by-Design" approach ensures the protection of sensitive patient PII.
 
 ### 8. Future Horizons (2026+)
 
-- **Generative Clinician Assistant**: Integration with lightweight Med-LLMs for automated discharge summary generation and clinical coding suggestions.
-- **IoT Cold-Chain Monitoring**: Real-time vaccine refrigerator telemetry integrated directly into the Logistics Module.
-- **State-Wide EOC Dashboard**: A command-and-control interface for the State Emergency Operations Center during outbreaks.
+- **Phase 14: Tele-Health Patient Hub**: A mobile-first patient portal allowing remote vital sign submission (BP, Temp) and tele-consultation scheduling.
+- **Phase 15: Smart Cold-Chain (IoT)**: Integration with hardware-based thermal sensors for real-time vaccine refrigerator telemetry.
+- **Phase 16: Population Health AI Studio**: Advanced GIS-based data visualization with ML-driven outbreak clustering for state-level epidemiology.
 
 ---
 **Standard**: ISO/TC 215 Medical Informatics | HL7 FHIR Allied
