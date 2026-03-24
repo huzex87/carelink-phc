@@ -14,6 +14,7 @@ import { auditLogger } from './middleware/audit.js';
 import patientsRouter from './routes/patients.js';
 import encountersRouter from './routes/encounters.js';
 import analyticsRouter from './routes/analytics.js';
+import aiRouter from './routes/ai.js';
 import { initCouchDB } from './config/couchdb.js';
 import swaggerSpecs from './config/swagger.js';
 import sequelize from './config/database.js';
@@ -129,6 +130,7 @@ app.get('/health', async (req: Request, res: Response) => {
 // Layer 1 - EHR Routes
 app.use('/api/v1/patients', keycloak.protect(), patientsRouter);
 app.use('/api/v1/encounters', keycloak.protect(), encountersRouter);
+app.use('/api/v1/ai', keycloak.protect(), aiRouter);
 
 // Layer 2/3 - Analytics Routes
 app.use('/api/v1/analytics', keycloak.protect('realm:manager'), analyticsRouter);

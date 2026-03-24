@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { db } from '../../db';
-import { Stethoscope, ClipboardList, Thermometer, Activity, Send } from 'lucide-react';
+import { Stethoscope, ClipboardList, Thermometer, Activity, Send, Sparkles, Loader2, CheckCircle } from 'lucide-react';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -34,6 +34,27 @@ const OPDForm: React.FC<OPDFormProps> = ({ patientId, onComplete }) => {
     const [loading, setLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [isSuggesting, setIsSuggesting] = useState(false);
+    const [aiSuggestions, setAiSuggestions] = useState<{ code: string; description: string; confidence: number }[]>([]);
+
+    const handleMagicSuggest = async () => {
+        if (!formData.complaint) return;
+        setIsSuggesting(true);
+        try {
+            const response = await fetch('/api/v1/ai/icd10-suggest', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ note: formData.complaint }),
+            });
+            const data = await response.json();
+            setAiSuggestions(data.suggestions || []);
+            setDropdownOpen(true);
+        } catch (error) {
+            console.error('AI Suggest Error:', error);
+        } finally {
+            setIsSuggesting(false);
+        }
+    };
 
     const filteredDiagnoses = ICD10_SUBSET.filter(dx =>
         dx.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -121,9 +142,20 @@ const OPDForm: React.FC<OPDFormProps> = ({ patientId, onComplete }) => {
             </div>
 
             <div className="space-y-2 relative">
-                <label className="text-sm font-semibold flex items-center gap-2">
-                    <Stethoscope size={16} /> Diagnosis (ICD-10 Subset)
-                </label>
+                <div className="flex items-center justify-between">
+                    <label className="text-sm font-semibold flex items-center gap-2">
+                        <Stethoscope size={16} /> Diagnosis (ICD-10 Subset)
+                    </label>
+                    <button
+                        type="button"
+                        onClick={handleMagicSuggest}
+                        disabled={!formData.complaint || isSuggesting}
+                        className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary px-2.5 py-1 rounded-full hover:bg-primary hover:text-white transition-all disabled:opacity-30 disabled:cursor-not-allowed group"
+                    >
+                        {isSuggesting ? <Loader2 size={10} className="animate-spin" /> : <Sparkles size={10} className="group-hover:animate-pulse" />}
+                        Magic Suggest
+                    </button>
+                </div>
                 <div className="relative">
                     <input
                         type="text"
@@ -152,6 +184,36 @@ const OPDForm: React.FC<OPDFormProps> = ({ patientId, onComplete }) => {
                                 className="absolute z-50 w-full mt-2 bg-white/95 backdrop-blur-xl border border-border/50 rounded-xl shadow-glass overflow-hidden"
                             >
                                 <ul className="max-h-60 overflow-y-auto custom-scrollbar py-2">
+                                    {aiSuggestions.length > 0 && (
+                                        <div className="px-4 py-2 border-b border-border/40 bg-primary/5 mb-1">
+                                            <span className="text-[10px] font-bold text-primary uppercase tracking-widest flex items-center gap-1.5">
+                                                <Sparkles size={10} /> AI Recommendations
+                                            </span>
+                                        </div>
+                                    )}
+                                    {aiSuggestions.map((suggestion) => (
+                                        <li
+                                            key={suggestion.code}
+                                            className="px-4 py-2.5 hover:bg-primary/10 cursor-pointer flex items-center justify-between group transition-colors border-l-4 border-primary"
+                                            onClick={() => {
+                                                setFormData({ ...formData, diagnosis: `${suggestion.code} - ${suggestion.description}` });
+                                                setSearchQuery(`${suggestion.code} - ${suggestion.description}`);
+                                                setDropdownOpen(false);
+                                                setAiSuggestions([]);
+                                            }}
+                                        >
+                                            <div className="flex flex-col">
+                                                <span className="text-sm font-bold text-text-main flex items-center gap-2">
+                                                    {suggestion.description}
+                                                    <CheckCircle size={12} className="text-primary" />
+                                                </span>
+                                                <span className="text-[10px] text-text-muted">Confidence: {Math.round(suggestion.confidence * 100)}%</span>
+                                            </div>
+                                            <span className="text-xs font-bold font-mono text-primary bg-white px-2 py-0.5 rounded shadow-sm">{suggestion.code}</span>
+                                        </li>
+                                    ))}
+                                    {aiSuggestions.length > 0 && <div className="h-px bg-border/40 my-1 mx-2" />}
+
                                     {filteredDiagnoses.length > 0 ? (
                                         filteredDiagnoses.map((dx) => (
                                             <li
@@ -161,6 +223,7 @@ const OPDForm: React.FC<OPDFormProps> = ({ patientId, onComplete }) => {
                                                     setFormData({ ...formData, diagnosis: `${dx.code} - ${dx.name}` });
                                                     setSearchQuery(`${dx.code} - ${dx.name}`);
                                                     setDropdownOpen(false);
+                                                    setAiSuggestions([]);
                                                 }}
                                             >
                                                 <span className="text-sm font-medium text-text-main group-hover:text-primary transition-colors">{dx.name}</span>
@@ -168,7 +231,7 @@ const OPDForm: React.FC<OPDFormProps> = ({ patientId, onComplete }) => {
                                             </li>
                                         ))
                                     ) : (
-                                        <li className="px-4 py-3 text-sm text-text-muted text-center italic">No matching ICD-10 codes found</li>
+                                        !aiSuggestions.length && <li className="px-4 py-3 text-sm text-text-muted text-center italic">No matching ICD-10 codes found</li>
                                     )}
                                 </ul>
                             </motion.div>

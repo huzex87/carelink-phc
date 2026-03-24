@@ -5,7 +5,7 @@ import IMMForm from './IMMForm';
 import NCDForm from './NCDForm';
 import ReferralModule from '../patients/ReferralModule';
 import ClinicalTimeline from '../../components/ClinicalTimeline';
-import { User, ChevronLeft, Stethoscope, Baby, HeartPulse, ShieldCheck, Share2 } from 'lucide-react';
+import { User, ChevronLeft, Stethoscope, Baby, HeartPulse, ShieldCheck, Share2, Sparkles, Copy, X, Loader2 } from 'lucide-react';
 import RiskAlertSystem, { RiskAlert } from '../clinician/RiskAlertSystem';
 
 interface Patient {
@@ -24,6 +24,27 @@ interface EncounterDashboardProps {
 
 const EncounterDashboard: React.FC<EncounterDashboardProps> = ({ patient, onBack }) => {
     const [activeModule, setActiveModule] = useState<'selection' | 'OPD' | 'ANC' | 'IMM' | 'NCD' | 'REF'>('selection');
+    const [showSummary, setShowSummary] = useState(false);
+    const [summary, setSummary] = useState('');
+    const [isGenerating, setIsGenerating] = useState(false);
+
+    const generateSummary = async () => {
+        setIsGenerating(true);
+        setShowSummary(true);
+        try {
+            const response = await fetch('/api/v1/ai/summary', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ patientId: patient._id }),
+            });
+            const data = await response.json();
+            setSummary(data.summary);
+        } catch (error) {
+            setSummary('Failed to generate summary. Please ensure the AI service is online.');
+        } finally {
+            setIsGenerating(false);
+        }
+    };
 
     // Mock high-risk alert for demonstration if it's a specific patient or just for the UI showcase
     const demoAlert: RiskAlert = {
@@ -62,6 +83,13 @@ const EncounterDashboard: React.FC<EncounterDashboardProps> = ({ patient, onBack
                             </div>
                         </div>
                     </div>
+                    <button 
+                        onClick={generateSummary}
+                        className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary to-primary-dark text-white rounded-xl font-bold shadow-lg shadow-primary/20 hover:shadow-primary/30 hover:scale-[1.02] transition-all"
+                    >
+                        <Sparkles size={18} />
+                        AI Discharge Summary
+                    </button>
                 </div>
 
                 {/* Dynamic Patient Risk Alert System */}
@@ -141,6 +169,53 @@ const EncounterDashboard: React.FC<EncounterDashboardProps> = ({ patient, onBack
                     <ReferralModule />
                 </div>
             ) : null}
+
+            {/* AI Summary Modal */}
+            {showSummary && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/40 backdrop-blur-sm animate-fade-in">
+                    <div className="glass-card w-full max-w-2xl overflow-hidden shadow-2xl scale-in">
+                        <div className="p-6 border-b border-border/40 flex items-center justify-between bg-primary/5">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-primary/10 text-primary rounded-lg">
+                                    <Sparkles size={20} />
+                                </div>
+                                <h3 className="text-xl font-bold">AI Clinical Summary</h3>
+                            </div>
+                            <button onClick={() => setShowSummary(false)} className="p-2 hover:bg-white rounded-full transition-colors">
+                                <X size={20} />
+                            </button>
+                        </div>
+                        <div className="p-8 max-h-[60vh] overflow-y-auto">
+                            {isGenerating ? (
+                                <div className="flex flex-col items-center justify-center py-12 gap-4">
+                                    <Loader2 className="animate-spin text-primary" size={40} />
+                                    <p className="text-text-muted font-medium animate-pulse">Analyzing clinical history and generating insights...</p>
+                                </div>
+                            ) : (
+                                <div className="prose prose-slate max-w-none whitespace-pre-wrap font-medium text-text-main leading-relaxed">
+                                    {summary}
+                                </div>
+                            )}
+                        </div>
+                        <div className="p-6 border-t border-border/40 bg-surface-muted flex justify-end gap-4">
+                            {!isGenerating && (
+                                <button 
+                                    onClick={() => navigator.clipboard.writeText(summary)}
+                                    className="flex items-center gap-2 px-4 py-2 hover:bg-white rounded-lg transition-colors font-bold text-sm"
+                                >
+                                    <Copy size={16} /> Copy to Clipboard
+                                </button>
+                            )}
+                            <button 
+                                onClick={() => setShowSummary(false)}
+                                className="px-6 py-2.5 bg-text-main text-white rounded-xl font-bold hover:bg-black transition-colors shadow-lg"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

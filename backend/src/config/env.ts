@@ -12,5 +12,6 @@ export const env = cleanEnv(process.env, {
     DB_PASS: str({ default: 'postgres' }),
     JWT_SECRET: str(),
     SESSION_SECRET: str({ default: 'carelink_secure_session_2026' }),
-    COUCHDB_URL: str({ default: 'http://localhost:5984' })
+    COUCHDB_URL: str({ default: 'http://localhost:5984' }),
+    GEMINI_API_KEY: str({ default: '' })
 });
