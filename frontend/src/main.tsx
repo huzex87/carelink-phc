@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom'
 import '@fontsource/outfit'
 import App from './App'
 import './index.css'
+import { AuthProvider } from './context/AuthContext'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <AuthProvider>
+            <App />
+        </AuthProvider>
+    </React.StrictMode>,
+    document.getElementById('root')
 )
